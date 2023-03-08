@@ -19,7 +19,7 @@ const generateRandomColor = () => {
 
 // wait for 1 second
 export const waait = () =>
-  new Promise((res) => setTimeout(res, Math.random() * 2500));
+  new Promise((res) => setTimeout(res, Math.random() * 1000));
 
 // create budget
 export const createBudget = ({ name, amount }) => {
