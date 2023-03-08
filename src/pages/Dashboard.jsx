@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 // components
 import Intro from "../components/Intro";
 import AddBudgetForm from "../components/AddBudgetForm";
+import AddExpenseForm from "../components/AddExpenseForm";
+import BudgetItem from "../components/BudgetItem";
+import Table from "../components/Table";
 
 // helper functions
 import {
@@ -16,13 +19,13 @@ import {
   setData,
   waait,
 } from "../helpers";
-import AddExpenseForm from "../components/AddExpenseForm";
 
 // loader
 export function dashBoardLoader() {
   const userName = fetchData("userName");
   const budgets = fetchData("budgets");
-  return { userName, budgets };
+  const expenses = fetchData("expenses");
+  return { userName, budgets, expenses };
 }
 
 // action
@@ -68,7 +71,7 @@ export async function dashBoardAction({ request }) {
 }
 
 const Dashboard = () => {
-  const { userName, budgets } = useLoaderData();
+  const { userName, budgets, expenses } = useLoaderData();
   return (
     <div>
       {userName ? (
@@ -83,6 +86,22 @@ const Dashboard = () => {
                   <AddBudgetForm />
                   <AddExpenseForm budgets={budgets} />
                 </div>
+                <h2>Existing Budgets</h2>
+                <div className="budgets">
+                  {budgets.map((budget) => (
+                    <BudgetItem key={budget.id} budget={budget} />
+                  ))}
+                </div>
+                {expenses && expenses.length > 0 && (
+                  <div className="gird-md">
+                    <h2>Recent Expenses</h2>
+                    <Table
+                      expenses={expenses.sort(
+                        (a, b) => b.createdAt - a.createdAt
+                      )}
+                    />
+                  </div>
+                )}
               </div>
             ) : (
               <div className="grid-sm">
