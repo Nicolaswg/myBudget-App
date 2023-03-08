@@ -56,3 +56,41 @@ export const createExpense = ({ name, amount, budgetId }) => {
     JSON.stringify([...existingExpenses, newItem])
   );
 };
+
+/// total spent by budget
+
+export const calculateSpentByBudget = (budgetId) => {
+  const expenses = fetchData("expenses") ?? [];
+  const budgetSpent = expenses.reduce((acc, expense) => {
+    // check if the expense have the same budgetId
+    if (expense.budgetId !== budgetId) return acc;
+
+    // add the current amount to my total
+    return acc + expense.amount;
+  }, 0);
+  return budgetSpent;
+};
+
+// FORMATTING
+
+// Format date
+export const formatDateToLocaleString = (epoch) =>
+  new Date(epoch).toLocaleString();
+
+// Formating percentages
+
+export const formatPercentage = (amount) => {
+  return amount.toLocaleString(undefined, {
+    style: "percent",
+    minimumFractionDigits: 0,
+  });
+};
+
+// Fortmat currency
+
+export const formatCurrency = (amount) => {
+  return amount.toLocaleString(undefined, {
+    style: "currency",
+    currency: "USD",
+  });
+};
