@@ -10,6 +10,7 @@ import Main, { mainLoader } from "./layouts/Main";
 
 // Routes
 import Dashboard, { dashBoardAction, dashBoardLoader } from "./pages/Dashboard";
+import Expenses, { expensesLoader } from "./pages/Expenses";
 import Error from "./pages/Error";
 
 //Actions
@@ -28,6 +29,11 @@ const router = createBrowserRouter([
         loader: dashBoardLoader,
         action: dashBoardAction,
         errorElement: <Error />,
+      },
+      {
+        path: "expenses",
+        element: <Expenses />,
+        loader: expensesLoader,
       },
       {
         path: "logout",
