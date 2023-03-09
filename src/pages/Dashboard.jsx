@@ -15,6 +15,7 @@ import Table from "../components/Table";
 import {
   createBudget,
   createExpense,
+  deleteItem,
   fetchData,
   setData,
   waait,
@@ -66,6 +67,18 @@ export async function dashBoardAction({ request }) {
       return toast.success(`Expense ${values.newExpense} created!`);
     } catch (error) {
       throw new Error("There was a a problem creating your expense.");
+    }
+  }
+
+  if (_action === "deleteExpense") {
+    try {
+      deleteItem({
+        key: "expenses",
+        id: values.expenseId,
+      });
+      return toast.success(`Expense deleted!`);
+    } catch (error) {
+      throw new Error("There was a a problem deleting your expense.");
     }
   }
 }
