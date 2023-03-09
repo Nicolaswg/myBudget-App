@@ -3,13 +3,27 @@ export const fetchData = (key) => {
   return JSON.parse(localStorage.getItem(key));
 };
 
-export const deleteItem = ({ key }) => {
+export const deleteItem = ({ key, id }) => {
+  const existingData = fetchData(key) ?? [];
+  if (id) {
+    const newData = existingData.filter((item) => item.id !== id);
+    return localStorage.setItem(key, JSON.stringify(newData));
+  }
+
   return localStorage.removeItem(key);
 };
 
 export const setData = (data) => {
   return localStorage.setItem("userName", JSON.stringify(data.userName));
 };
+
+// get all item from local Storage
+export const getllMatchingItems = ({ category, key, value }) => {
+  const data = fetchData(category) ?? [];
+  return data.filter((item) => item[key] === value);
+};
+
+// delete item from local storage
 
 // generate random color
 const generateRandomColor = () => {
