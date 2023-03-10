@@ -18,7 +18,7 @@ export const setData = (data) => {
 };
 
 // get all item from local Storage
-export const getllMatchingItems = ({ category, key, value }) => {
+export const getAllMatchingItems = ({ category, key, value }) => {
   const data = fetchData(category) ?? [];
   return data.filter((item) => item[key] === value);
 };

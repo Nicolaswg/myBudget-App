@@ -11,10 +11,12 @@ import Main, { mainLoader } from "./layouts/Main";
 // Routes
 import Dashboard, { dashBoardAction, dashBoardLoader } from "./pages/Dashboard";
 import Expenses, { expensesAction, expensesLoader } from "./pages/Expenses";
+import Bubgets, { budgetAction, budgetLoader } from "./pages/Bubgets";
 import Error from "./pages/Error";
 
 //Actions
 import { logoutAction } from "./actions/logout";
+import { deleteBudget } from "./actions/deleteBudget";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +37,22 @@ const router = createBrowserRouter([
         element: <Expenses />,
         loader: expensesLoader,
         action: expensesAction,
+        errorElement: <Error />,
       },
+      {
+        path: "budget/:id",
+        element: <Bubgets />,
+        loader: budgetLoader,
+        action: budgetAction,
+        errorElement: <Error />,
+        children: [
+          {
+            path: "delete",
+            action: deleteBudget,
+          },
+        ],
+      },
+
       {
         path: "logout",
         action: logoutAction,

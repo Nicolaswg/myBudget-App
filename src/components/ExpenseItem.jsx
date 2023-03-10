@@ -8,12 +8,12 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import {
   formatCurrency,
   formatDateToLocaleString,
-  getllMatchingItems,
+  getAllMatchingItems,
 } from "../helpers";
 
-const ExpenseItem = ({ expense }) => {
+const ExpenseItem = ({ expense, showBudget }) => {
   const { name, amount, createdAt } = expense;
-  const budget = getllMatchingItems({
+  const budget = getAllMatchingItems({
     category: "budgets",
     key: "id",
     value: expense.budgetId,
@@ -24,16 +24,18 @@ const ExpenseItem = ({ expense }) => {
       <td>{name}</td>
       <td>{formatCurrency(amount)}</td>
       <td>{formatDateToLocaleString(createdAt)}</td>
-      <td>
-        <Link
-          to={`/budget/${budget.id}`}
-          style={{
-            "--accent": budget.color,
-          }}
-        >
-          {budget.name}
-        </Link>
-      </td>
+      {showBudget && (
+        <td>
+          <Link
+            to={`/budget/${budget.id}`}
+            style={{
+              "--accent": budget.color,
+            }}
+          >
+            {budget.name}
+          </Link>
+        </td>
+      )}
       <td>
         <fetcher.Form method="post">
           <input type="hidden" name="_action" value="deleteExpense" />
